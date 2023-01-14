@@ -1,3 +1,12 @@
+/*
+Write a program that asks the user to enter an amount of money in the format of dollars andremaining cents. The program should calculate and print the minimum number of coins (quarters, dimes, nickels and pennies) that are equivalent to the given amount.
+
+Your program should interact with the user exactly as it shows in the following example: Please enter your amount in the format of dollars and cents separated by a space:
+4 37
+4 dollars and 37 cents are:
+17 quarters, 1 dimes, 0 nickels and 2 pennies
+*/
+
 #include <iostream>
 using namespace std;
 
