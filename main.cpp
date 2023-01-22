@@ -90,3 +90,133 @@
 //     cout << "The Uppercase of " << lowerCaseChar << " is " << upperCaseEquivalent << endl;
 //     return 0;
 // }
+
+// #include <iostream>
+// using namespace std;
+
+// int main()
+// {
+//     int userInput, absValue;
+//     cout << "Please enter an integer:" << endl;
+//     cin >> userInput;
+//     absValue = userInput;
+//     if (userInput < 0)
+//         absValue = userInput * (-1);
+//     cout << "|" << userInput << "| =" << absValue << endl;
+//     return 0;
+// }
+
+// #include <iostream>
+// using namespace std;
+
+// int main()
+// {
+//     int userInput;
+//     cout << "Please enter a positive integer:" << endl;
+//     cin >> userInput;
+
+//     if (userInput % 2 == 0)
+//     {
+//         cout << userInput << " is even." << endl;
+//     }
+//     else
+//     {
+//         cout << userInput << " is odd." << endl;
+//     }
+//     return 0;
+// }
+
+// #include <iostream>
+// using namespace std;
+// int main()
+// {
+//     char userCh;
+//     cout << "Please enter a character:" << endl;
+//     cin >> userCh;
+
+//     if (userCh >= 'a' && userCh <= 'z')
+//         cout << userCh << " is a lower case lettter" << endl;
+//     else if (userCh >= 'A' && userCh <= 'Z')
+//         cout << userCh << " is an upper case letter" << endl;
+//     else if (userCh >= '0' && userCh <= '9')
+//         cout << userCh << " is a digit" << endl;
+//     else
+//         cout << userCh << " is not alpha-numeric character" << endl;
+
+//     return 0;
+// }
+
+// #include <iostream>
+// #include <string>
+// using namespace std;
+
+// int main()
+// {
+//     int hour24, minutes24;
+//     int hour12, minutes12;
+//     char temp;
+//     string period;
+//     cout << "Please enter the time in a 24 hour format" << endl;
+//     cin >> hour24 >> temp >> minutes24;
+//     minutes12 = minutes24;
+//     if (hour24 >= 0 && hour24 <= 11)
+//     {
+//         period = "am";
+//         if (hour24 == 0)
+//             hour12 = 12;
+//         else
+//             hour12 = hour24;
+//     }
+//     else
+//     {
+//         period = "pm";
+//         if (hour24 == 12)
+//             hour12 = 12;
+//         else
+//             hour12 = hour24 - 12;
+//     }
+//     cout << hour24 << ":" << minutes24 << " is " << hour12 << ":" << minutes12 << " " << period << endl;
+//     return 0;
+// }
+
+// Write a program that reads from a user a simple  mathetical expression (operators allowed +, -, / * and prints its value.)
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    double arg1, arg2, res;
+    char op;
+
+    cout << "Please enter an expression in the form arg op arg2" << endl;
+    cin >> arg1 >> op >> arg2;
+
+    switch (op)
+    {
+    case '+':
+        res = arg1 + arg2;
+        cout << res << endl;
+        break;
+    case '-':
+        res = arg1 - arg2;
+        cout << res << endl;
+        break;
+    case '/':
+        if (arg2 != 0)
+        {
+            res = arg1 / arg2;
+            cout << res << endl;
+        }
+        else
+            cout << "illegal expression!" << endl;
+        break;
+    case '*':
+        res = arg1 * arg2;
+        cout << res << endl;
+        break;
+    default:
+        cout << "Illegal expression!" << endl;
+        break;
+    }
+}
