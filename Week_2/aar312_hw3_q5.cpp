@@ -12,11 +12,13 @@ int main() {
 
   cout << "Please enter weight (in pounds): " << endl;
   cin >> weight;
-  weight = weight * POUND_TO_KILO;
   cout << "Please enter height (in inches): " << endl;
   cin >> height;
+
+  weight = weight * POUND_TO_KILO;
   height = height * INCH_TO_METER;
   bodyMassIndex = weight / (height * height);
+
   if (bodyMassIndex < 18.5)
     cout << "The weight status is: Underweight" << endl;
   else if (bodyMassIndex < 25)

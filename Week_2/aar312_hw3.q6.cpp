@@ -29,8 +29,9 @@ int main() {
   } else if (dayOfTheWeek == "Sa" || dayOfTheWeek == "Su") {
     longDistanceCost = WEEKEND_RATE * callLength;
   } else {
-    longDistanceCost = -1;
+    longDistanceCost = -1; // day could not be matched
   }
+
   cout.setf(ios::fixed);
   cout.precision(2);
   if (longDistanceCost == -1) {
