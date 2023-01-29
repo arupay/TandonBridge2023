@@ -181,42 +181,132 @@
 
 // Write a program that reads from a user a simple  mathetical expression (operators allowed +, -, / * and prints its value.)
 
+// #include <iostream>
+// using namespace std;
+
+// int main()
+// {
+//     double arg1, arg2, res;
+//     char op;
+
+//     cout << "Please enter an expression in the form arg op arg2" << endl;
+//     cin >> arg1 >> op >> arg2;
+
+//     switch (op)
+//     {
+//     case '+':
+//         res = arg1 + arg2;
+//         cout << res << endl;
+//         break;
+//     case '-':
+//         res = arg1 - arg2;
+//         cout << res << endl;
+//         break;
+//     case '/':
+//         if (arg2 != 0)
+//         {
+//             res = arg1 / arg2;
+//             cout << res << endl;
+//         }
+//         else
+//             cout << "illegal expression!" << endl;
+//         break;
+//     case '*':
+//         res = arg1 * arg2;
+//         cout << res << endl;
+//         break;
+//     default:
+//         cout << "Illegal expression!" << endl;
+//         break;
+//     }
+// }
+
+// week 4 Iterative Statements
+
+// int main() {
+
+//   int userInput, count = 1;
+
+//   cout << "Please enter a positive integer: " << endl;
+//   cin >> userInput;
+
+//   while (count <= userInput) {
+//     cout << count << endl;
+//     count++;
+//   }
+// }
+
+// int main() {
+//   int userInput;
+//   cout << "Please enter a number: " << endl;
+//   cin >> userInput;
+
+//   for (int i = 1; i <= userInput; i++) {
+//     cout << i << endl;
+//   }
+//   return 0;
+
+// int main() {
+//   int userInput, sum = 0, countDigits;
+//   cout << "Enter a number and I shall return the sum of its parts: " << endl;
+//   cin >> userInput;
+
+//   countDigits = 0;
+
+//   while (userInput > 0) {
+//     sum += userInput % 10;
+//     countDigits++;
+//     userInput /= 10;
+//   }
+//   cout << "The sum is: " << sum << " and number of digits is: " << countDigits << endl;
+//   return 0;
+// }
+
+// #include <iostream>
+// using namespace std;
+
+// int main() {
+
+//   int numOfStudents, gradeInput, sumOfGrades = 0;
+//   double average;
+
+//   cout << "Please enter the number of students in this class: \n";
+//   cin >> numOfStudents;
+//   cout << "Now enter the grades of each student: \n";
+
+//   for (int count = 1; count <= numOfStudents; count++) {
+//     cin >> gradeInput;
+//     sumOfGrades += gradeInput;
+//   }
+//   average = (double)sumOfGrades / (double)numOfStudents; // MUST TYPE CAST
+//   cout << average << endl;
+// }
+
 #include <iostream>
 using namespace std;
 
-int main()
-{
-    double arg1, arg2, res;
-    char op;
+int main() {
+  bool seenEndOfInput; // When we choose flag name, must be a statement that can have yes or no answer.
+  int sum, numOfStudents;
+  int curr;
+  double average;
 
-    cout << "Please enter an expression in the form arg op arg2" << endl;
-    cin >> arg1 >> op >> arg2;
+  cout << "Enter the grades separated by a space" << endl;
+  cout << "end the sequence by typing -1" << endl;
+  sum = 0;
+  numOfStudents = 0;
 
-    switch (op)
-    {
-    case '+':
-        res = arg1 + arg2;
-        cout << res << endl;
-        break;
-    case '-':
-        res = arg1 - arg2;
-        cout << res << endl;
-        break;
-    case '/':
-        if (arg2 != 0)
-        {
-            res = arg1 / arg2;
-            cout << res << endl;
-        }
-        else
-            cout << "illegal expression!" << endl;
-        break;
-    case '*':
-        res = arg1 * arg2;
-        cout << res << endl;
-        break;
-    default:
-        cout << "Illegal expression!" << endl;
-        break;
+  seenEndOfInput = false;
+  while (!seenEndOfInput) {
+    cin >> curr;
+    if (curr == -1) {
+      seenEndOfInput = !seenEndOfInput;
+    } else {
+      sum += curr;
+      numOfStudents++;
     }
+  }
+  average = double(sum) / double(numOfStudents);
+  cout << average << endl;
+  return 0;
 }

@@ -34,6 +34,8 @@ int main() {
 
   cout.setf(ios::fixed);
   cout.precision(2);
+  cout.setf(ios::showpoint);
+
   if (longDistanceCost == -1) {
     cout << "Invalid Inputs. Please review your inputs." << endl;
   } else {
