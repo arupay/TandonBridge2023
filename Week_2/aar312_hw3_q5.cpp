@@ -24,7 +24,7 @@ int main() {
   else if (bodyMassIndex < 25)
     cout << "The weight status is: Normal";
   else if (bodyMassIndex < 30)
-    cout << "The weight status is: Overweight";
+    cout << "The weight status is: Overweight";1
   else
     cout << "The weight status is: Obese";
 }
