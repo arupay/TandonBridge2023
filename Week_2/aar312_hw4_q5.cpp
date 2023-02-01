@@ -9,30 +9,24 @@ int main() {
   cout << "Please enter a positive integer to recieve an hourglass text image: " << endl;
   cin >> userInput;
 
-  int amount_letters = userInput;
-  int amount_spaces = 0;
-
-  for (int i = 0; i < userInput; ++i) // as many rows as there are letters
-  {
-    for (int j = 0; j < amount_spaces; ++j) // print spaces
-      std::cout << ' ';
-
-    for (int k = 0; k < amount_letters; ++k) // print letters
-      std::cout << 'A';
-
-    if (i < userInput / 2) // top half of the hourglass
-    {
-      amount_letters -= 2; // decrease letters
-      amount_spaces += 1;  // increase space
+  for (int i = userInput; i >= 1; i--) {
+    for (int j = 1; j <= userInput - i; j++) {
+      cout << "  ";
     }
-
-    else // bottom half of the hourglass
-    {
-      amount_letters += 2; // increase letters
-      amount_spaces -= 1;  // decrease space
+    for (int k = 1; k <= 2 * i - 1; k++) {
+      cout << " *";
     }
-
-    std::cout << std::endl; // print newline
+    cout << endl;
   }
+  for (int i = 1; i <= userInput; i++) {
+    for (int j = 1; j <= userInput - i; j++) {
+      cout << "  ";
+    }
+    for (int k = 1; k <= 2 * i - 1; k++) {
+      cout << " *";
+    }
+    cout << endl;
+  }
+
   return 0;
 }

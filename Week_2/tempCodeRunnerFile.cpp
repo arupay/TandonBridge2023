@@ -1,3 +1,3 @@
-    // for (int j = 1; j >= 1; j++) {
-    //   cout << " y";
+    // for (int y = x; y <= rows / 2; y++) {
+    //   cout << " *";
     // }
