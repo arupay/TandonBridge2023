@@ -1,32 +1,43 @@
 #include <iostream>
 using namespace std;
 
-// DEF RETURN TO THIS PROBLEM
-
 int main() {
-  int userInput, rows;
-  string starLineTop, starLineBottom, hourglassShape;
+  int userInput;
   cout << "Please enter a positive integer to recieve an hourglass text image: " << endl;
   cin >> userInput;
 
-  for (int i = userInput; i >= 1; i--) {
-    for (int j = 1; j <= userInput - i; j++) {
-      cout << "  ";
+  char star = '*';
+  char space = ' ';
+  int lineLimit = userInput;
+  int bottomSpacesLimit = userInput - 1;
+  int bottomStarLimit = 1;
+  int topSpacesLimit = 0;
+  int topStarLimit = (userInput * 2) - 1;
+
+  for (int k = 0; k < lineLimit; k++) {
+    for (int j = 0; j < topSpacesLimit; j++) {
+      cout << space;
     }
-    for (int k = 1; k <= 2 * i - 1; k++) {
-      cout << " *";
+    for (int j = 0; j < topStarLimit; j++) {
+      cout << star;
     }
     cout << endl;
-  }
-  for (int i = 1; i <= userInput; i++) {
-    for (int j = 1; j <= userInput - i; j++) {
-      cout << "  ";
-    }
-    for (int k = 1; k <= 2 * i - 1; k++) {
-      cout << " *";
-    }
-    cout << endl;
+    topSpacesLimit++;
+    topStarLimit -= 2;
   }
 
+  for (int i = 0; i < lineLimit; i++) {
+
+    for (int j = 0; j < bottomSpacesLimit; j++) {
+      cout << space;
+    }
+
+    for (int j = 0; j < bottomStarLimit; j++) {
+      cout << star;
+    }
+    cout << endl;
+    bottomSpacesLimit--;
+    bottomStarLimit += 2;
+  }
   return 0;
 }
