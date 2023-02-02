@@ -1,6 +1,5 @@
 // Write two versions of a program that reads a sequence of positive integers from the user
 // calculates their geometric mean, and prints the geometric mean.
-// How can we input validate only positive numbers?
 
 #include <cmath>
 #include <iostream>
@@ -20,7 +19,7 @@ int main() {
     sequenceProductA = sequenceProductA * inputNumberA;
   }
 
-  geometricMean = pow(sequenceProductA, 1.0 / lengthOfSequence);
+  geometricMean = pow(sequenceProductA, 1.0 / lengthOfSequence); // why did this value have to be 1.0 and not 1?
   cout << "The geometric mean is: " << geometricMean << endl;
 
   cout << "-------------------------------------------------------------------\n";
@@ -46,7 +45,7 @@ int main() {
   }
 
   geometricMeanB = pow(sequenceProductB, 1.0 / sequenceLengthB);
-  cout << "The geometric mean is : " << geometricMeanB << endl;
+  cout << "The geometric mean is: " << geometricMeanB << endl;
 
   return 0;
 }

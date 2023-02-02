@@ -12,7 +12,8 @@ using namespace std;
 
 int main() {
   int userInput, currNumber;
-  string one = "I", five = "V", ten = "X", fifty = "L", oneHundred = "C", fiveHundred = "D", oneThousand = "M", romanEquivalent;
+  char one = 'I', five = 'V', ten = 'X', fifty = 'L', oneHundred = 'C', fiveHundred = 'D', oneThousand = 'M';
+  string romanEquivalent;
 
   cout << "Enter a decimal number: " << endl;
   cin >> userInput;
@@ -22,25 +23,25 @@ int main() {
 
   while (currNumber > 0) {
     if (currNumber >= 1000) {
-      romanEquivalent += "M";
+      romanEquivalent += oneThousand;
       currNumber -= 1000;
     } else if (currNumber >= 500) {
-      romanEquivalent += "D";
+      romanEquivalent += fiveHundred;
       currNumber -= 500;
     } else if (currNumber >= 100) {
-      romanEquivalent += "C";
+      romanEquivalent += oneHundred;
       currNumber -= 100;
     } else if (currNumber >= 50) {
-      romanEquivalent += "L";
+      romanEquivalent += fifty;
       currNumber -= 50;
     } else if (currNumber >= 10) {
-      romanEquivalent += "X";
+      romanEquivalent += ten;
       currNumber -= 10;
     } else if (currNumber >= 5) {
-      romanEquivalent += "V";
+      romanEquivalent += five;
       currNumber -= 5;
     } else {
-      romanEquivalent += "I";
+      romanEquivalent += one;
       currNumber -= 1;
     }
   }
