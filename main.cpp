@@ -282,31 +282,106 @@
 //   cout << average << endl;
 // }
 
+// #include <iostream>
+// using namespace std;
+
+// int main() {
+//   bool seenEndOfInput; // When we choose flag name, must be a statement that can have yes or no answer.
+//   int sum, numOfStudents;
+//   int curr;
+//   double average;
+
+//   cout << "Enter the grades separated by a space" << endl;
+//   cout << "end the sequence by typing -1" << endl;
+//   sum = 0;
+//   numOfStudents = 0;
+
+//   seenEndOfInput = false;
+//   while (!seenEndOfInput) {
+//     cin >> curr;
+//     if (curr == -1) {
+//       seenEndOfInput = !seenEndOfInput;
+//     } else {
+//       sum += curr;
+//       numOfStudents++;
+//     }
+//   }
+//   average = double(sum) / double(numOfStudents);
+//   cout << average << endl;
+//   return 0;
+// }
+// #include <iostream>
+// #include <string>
+// using namespace std;
+
+// int main() {
+//   int userInput;
+//   string binaryRepresentation;
+
+//   cout << "Please enter a positive number: \n";
+//   cin >> userInput;
+//   binaryRepresentation = "";
+
+//   int leftover = userInput;
+
+//   while (leftover > 0) {
+//     int remainder = leftover % 2;
+//     binaryRepresentation = to_string(remainder) + binaryRepresentation;
+//     leftover = leftover / 2;
+//   }
+
+//   cout << binaryRepresentation << endl;
+//   return 0;
+// }
+
+// #include <iostream>
+// #include <time.h>
+// using namespace std;
+
+// int main() {
+
+//   int secretNumber, userInput;
+
+//   srand(time(NULL));
+//   secretNumber = rand() % 20 + 1;
+
+//   cout << "Please guess a secret number between 1-20: " << endl;
+//   cin >> userInput;
+
+//   while (userInput != secretNumber) {
+//     if (userInput < secretNumber) {
+//       cout << "The secret number is greater than the input. Guess again: " << endl;
+//       cin >> userInput;
+//     } else {
+//       cout << "The secret number is smaller than the input. Guess again: " << endl;
+//       cin >> userInput;
+//     }
+//   }
+//   cout << "You got it! Congrats, it was " << secretNumber << endl;
+// }
 #include <iostream>
 using namespace std;
 
 int main() {
-  bool seenEndOfInput; // When we choose flag name, must be a statement that can have yes or no answer.
-  int sum, numOfStudents;
-  int curr;
-  double average;
+  int userInput;
+  string starLine;
+  cout << "Please enter a number and I will draw a hourglass" << endl;
+  cin >> userInput;
 
-  cout << "Enter the grades separated by a space" << endl;
-  cout << "end the sequence by typing -1" << endl;
-  sum = 0;
-  numOfStudents = 0;
+  userInput = (2 * userInput) - 1;
 
-  seenEndOfInput = false;
-  while (!seenEndOfInput) {
-    cin >> curr;
-    if (curr == -1) {
-      seenEndOfInput = !seenEndOfInput;
-    } else {
-      sum += curr;
-      numOfStudents++;
+  starLine = "";
+
+  for (int i = 1; i <= userInput; i++) {
+    starLine += "\n";
+    for (int j = 1; j <= userInput; j++) {
+      if (j < i || j > userInput) {
+        starLine += " ";
+      } else {
+        starLine += "*";
+      }
     }
   }
-  average = double(sum) / double(numOfStudents);
-  cout << average << endl;
+  cout << starLine << endl;
   return 0;
 }
