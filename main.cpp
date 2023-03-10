@@ -359,29 +359,132 @@
 //   }
 //   cout << "You got it! Congrats, it was " << secretNumber << endl;
 // }
+// #include <iostream>
+// using namespace std;
+
+// int main() {
+//   int userInput;
+//   string starLine;
+//   cout << "Please enter a number and I will draw a hourglass" << endl;
+//   cin >> userInput;
+
+//   userInput = (2 * userInput) - 1;
+
+//   starLine = "";
+
+//   for (int i = 1; i <= userInput; i++) {
+//     starLine += "\n";
+//     for (int j = 1; j <= userInput; j++) {
+//       if (j < i || j > userInput) {
+//         starLine += " ";
+//       } else {
+//         starLine += "*";
+//       }
+//     }
+//   }
+//   cout << starLine << endl;
+//   return 0;
+// }
+
+// 2/28 LECTURE
+
+//
+// #include <iostream>
+// using namespace std;
+
+// int search(int arr[], int logicalSize, int x);
+// int main() {
+//   int testArr[6] = {10, 20, 03, 5, 1, 100};
+//   int x;
+//   cout << "Enter a search: ";
+//   cin >> x;
+//   cout << search(testArr, 6, x) << endl;
+//   return 0;
+// }
+// int search(int arr[], int logicalSize, int x) {
+//   for (int i = 0; i < logicalSize; i++) {
+//     if (x == arr[i]) {
+//       return i;
+//     }
+//   }
+//   return -1;
+// }
+
+// ASCENDING ORDER SCENARIO
+
+// #include <iostream>
+// using namespace std;
+
+// int searchAscending(int arr[], int logicalSize, int x);
+// int main() {
+//   int testArr[6] = {10, 20, 30, 40, 50, 60};
+//   int x;
+//   cout << "Enter a search: ";
+//   cin >> x;
+//   cout << searchAscending(testArr, 6, x) << endl;
+//   return 0;
+// }
+// int searchAscending(int arr[], int logicalSize, int x) {
+//   for (int i = 0; i < logicalSize && arr[i] <= x; i++) {
+//     if (arr[i] == x) {
+//       return i;
+//     }
+//   }
+//   return -1;
+// }
+// #include <iostream>
+// using namespace std;
+// int main() {
+//   int arr[5] = {10, 20, -3, 4, 6};
+
+//   cout << arr[3] << endl;
+//   cout << arr << endl;
+//   return 0;
+// }
+
+// #include <iostream>
+// using namespace std;
+
+// void resizeArray(int *&arr, int currentSize, int newSize) {
+//   // must pass the array pointer by reference because we will CHANGE it
+//   int *temp = new int[newSize];
+//   for (int i = 0; i < currentSize; i++) {
+//     temp[i] = arr[i];
+//   }
+//   delete[] arr;
+//   arr = temp;
+// }
+
+// int main() {
+//   int size = 10;
+//   int *arr = new int[size];
+//   for (int i = 0; i < size; i++) {
+//     arr[i] = i * 10;
+//   }
+//   // How can we add one more elment into this array if it is full?
+//   // Lets write a funciton to resize this array.
+//   int oneMore = 110;
+//   int newSize = size * 2;
+//   resizeArray(arr, size, newSize);
+//   arr[size++] = oneMore;
+//   size = newSize;
+// }
+
 #include <iostream>
+#include <vector>
 using namespace std;
 
 int main() {
-  int userInput;
-  string starLine;
-  cout << "Please enter a number and I will draw a hourglass" << endl;
-  cin >> userInput;
-
-  userInput = (2 * userInput) - 1;
-
-  starLine = "";
-
-  for (int i = 1; i <= userInput; i++) {
-    starLine += "\n";
-    for (int j = 1; j <= userInput; j++) {
-      if (j < i || j > userInput) {
-        starLine += " ";
-      } else {
-        starLine += "*";
-      }
-    }
+  vector<int> v;
+  // declaration fo a vector!
+  for (int i = 0; i < 100; i++) {
+    v.push_back(i * 100);
   }
-  cout << starLine << endl;
-  return 0;
+  // for (int i = 0; i < v.size(); i++) {
+  //   cout << v[i] + 1 << endl;
+  // }
+  for (int i : v)
+    cout << i << endl;
+
+  // v.size() is the size property of the vector!!
 }
