@@ -95,10 +95,6 @@ int main2() {
   cout << "End your input by typing -1." << endl;
 
   userInputVec = vectorBuilder(userInputInt);
-  for (int i = 0; i < userInputVec.size(); i++) {
-    cout << userInputVec[i] << ' ';
-  }
-  cout << endl;
   cout << "Please enter the number you want to search." << endl;
   cin >> userInputSearchInt;
   searchVector(userInputVec, userInputSearchInt);
