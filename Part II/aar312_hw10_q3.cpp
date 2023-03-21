@@ -27,9 +27,9 @@ int main1() {
   cout << "Please enter the number you want to search." << endl;
   cin >> userInputSearchInt;
   searchArch(userInputArr, newArrSize, userInputSearchInt);
-
   return 0;
 }
+
 int *intArrayBuilder(int &userInputInt, int &updateArrSize) {
   int *userArr;
   int currInputCount = 0, maxUserArrSize = 1;
@@ -95,6 +95,7 @@ int main2() {
   cout << "End your input by typing -1." << endl;
 
   userInputVec = vectorBuilder(userInputInt);
+
   cout << "Please enter the number you want to search." << endl;
   cin >> userInputSearchInt;
   searchVector(userInputVec, userInputSearchInt);

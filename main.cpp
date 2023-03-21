@@ -470,21 +470,202 @@
 //   size = newSize;
 // }
 
+// #include <iostream>
+// #include <vector>
+// using namespace std;
+
+// int main() {
+//   vector<int> v;
+//   // declaration fo a vector!
+//   for (int i = 0; i < 100; i++) {
+//     v.push_back(i * 100);
+//   }
+//   // for (int i = 0; i < v.size(); i++) {
+//   //   cout << v[i] + 1 << endl;
+//   // }
+//   for (int i : v)
+//     cout << i << endl;
+
+//   // v.size() is the size property of the vector!!
+// }
+
+// Webinar -3/01 Pointers & Heap Storage
+
+// #include <iostream>
+// using namespace std;
+
+// int main() {
+//   int x;
+//   int *px;
+//   x = 5;
+//   px = &x;
+//   // cout << x << endl;
+//   // cout << px << endl;
+//   // cout << *px << endl;
+//   // cout << &px << endl;
+
+//   x = 7;
+//   *px = 9;
+//   cout << x << endl;
+//   cout << px << endl;
+//   cout << *px << endl;
+// }
+// #include <iostream>
+// using namespace std;
+
+// int main() {
+//   int x = 5;
+//   int *px;
+//   px = &x;
+//   cout << *px << endl;  // 5
+//   cout << px << endl;   // 5000 (PX HOLDS THE MEMORY ADDRESS OF X)
+//   cout << ++px << endl; // 5004 (ADDS 4 BYTES TO PX--> Pointers knows to increment by int size val )
+// }
+
+// USE CASES FOR POINTERS
+
+// 1) Extend the sytanx we have to work with arrays
+//-- Call By Ref/ Call By Value
+// 2) Alternate way to change the values of variables that are out of active scope.
+// 3) Dynamic memory allocation
+// 4) Organizing data in memory in linked structures.(Linked Lists & Trees)
+
+// 1)EXTEND THE SYNTAX WE HAVE TO WORK WITH ARRAYS
+
+// #include <iostream>
+// using namespace std;
+
+// void func1(int *pn) {
+//   *pn = *pn + 1;
+// }
+
+// int main() {
+//   int n = 5;
+//   func1(&n);
+//   cout << n << endl;
+//   return 0;
+// }
+
+// Dynamic Memory Allocation
+
+// #include <iostream>
+// using namespace std;
+
+// int main() {
+//   int *ptr = NULL;
+//   ptr = new int;
+
+//   *ptr = 5;
+
+//   cout << *ptr << endl;
+
+//   delete ptr;
+//   ptr = NULL;
+
+//   return 0;
+// }
+
+// #include <iostream>
+// using namespace std;
+// int main() {
+
+//   int *arr = NULL;
+//   int n;
+//   cout << "How many numbers do you need? " << endl;
+//   cin >> n;
+//   arr = new int[n];
+//   for (int i = 0; i < n; i++) {
+//     *(arr + i) = i * 10;
+//     cout << arr[i];
+//   }
+//   delete[] arr;
+//   arr = NULL;
+// }
+
+// #include <iostream>
+
+// using namespace std;
+
+// int main() {
+//   double *ptr1 = new double[8]; // ptr1  points at heap array of doubles
+//   for (int i = 0; i < 8; i++)
+//     ptr1[i] = (i + 55) * 1.0;
+
+//   double *ptr2 = NULL;
+//   ++ptr1;                      // shifts pointer 1 head to point at 11.0
+//   ptr2 = ptr1--;               // ptr2 points at 11/ ptr1 decrements by 1 ,points to 10
+//   ++ptr2;                      // increments ptr2 to point at 12
+//   cout << ptr2 - ptr1 << '\n'; // prints out 2 (INDEX 2 - INDEX 0)//OR TWO STEPS
+
+//   return 0;
+// }
+
+// #include <iostream>
+// using namespace std;
+
+// // Suppose we have 3 versions of the SWAP fn()
+// void swap(int *a, int *b) {
+//   int x = *a;
+//   *a = *b;
+//   *b = x;
+//   cout << "a: " << *a << "b: " << *b << endl;
+// }
+
+// int main() {
+//   int n1 = 12, n2 = 5;
+//   cout << "n1:  " << n1 << ", n2: " << n2 << endl;
+//   swap(&n1, &n2);
+//   cout << "AFTER SWAP FUNCTION: " << endl;
+//   cout << "n1:  " << n1 << ", n2: " << n2 << endl;
+//   return 0;
+// }
+// #include <iostream>
+// using namespace std;
+
+// int main() {
+//   unsigned int i;
+//   char *x;
+//   char *a = new char[4];
+//   for (i = 0; i < 4; ++i) {
+//     a[i] = char(i + int('p'));
+//   }
+//   for (i = 0; i < 4; ++i)
+//     cout << "A[" << i << "]==" << a[i] << endl;
+
+//   x = a++; // X = A , THEN A IS INCREMEMENTED.
+//   cout << *x << ' ' << a[0] << endl;
+//   x = ++a; // A IS INCREMENTED, THEN ASSIGNED TO X.
+//   cout << *x << ' ' << a[1] << endl;
+
+//   delete[] a;
+//   a = NULL;
+//   return 0;
+// }
+
+// Recursion and Mathematical induction both conbine smaller instances to prove larger instances
+// If we look at how we proof by induction we use an assumption of p on smalle rvalues in order to show that P is true on a larger value
+// When we want to design a recursive algo:
+//  Base Step
+// SOLVE the problem for the smallest possibel input (Mirrors Induction)
+// Inductive/Recursive Step
+// Assume that when we call the funciton on smaller inputs it does its job
+// Based on this assumption, find how to combine calls for msaller instances
+// in order to solve problems for a smaller input
+
 #include <iostream>
-#include <vector>
 using namespace std;
 
+void printAsc(int start, int end);
 int main() {
-  vector<int> v;
-  // declaration fo a vector!
-  for (int i = 0; i < 100; i++) {
-    v.push_back(i * 100);
-  }
-  // for (int i = 0; i < v.size(); i++) {
-  //   cout << v[i] + 1 << endl;
-  // }
-  for (int i : v)
-    cout << i << endl;
-
-  // v.size() is the size property of the vector!!
+  printAsc(1, 4);
 }
+
+void printAsc(int start, int end) {
+  if (start == end) {
+    cout << start << endl;
+  } else {
+    printAsc(start, end - 1);
+    cout << end << endl;
+  }
+}
+// printAsc(1,4) => 1 2 3 4 (With line Breaks.)
