@@ -1,3 +1,8 @@
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
 // EXAM March 2nd 2023
 
 // #include <iostream>
@@ -286,8 +291,6 @@
 //   }
 // }
 
-#include <iostream>
-using namespace std;
 // int findSumDigits(int n);
 // int main() {
 //   cout << findSumDigits(5) << endl;
@@ -338,33 +341,130 @@ using namespace std;
 //   }
 // }
 
-void printTriangle(int n) {
-  const char star = '*';
-  if (n == 1) {
-    cout << star << endl;
-  } else {
-    for (int i = 0; i < n; i++) {
-      cout << star;
-    }
-    cout << endl;
-    printTriangle(n - 1);
-  }
-}
+// void printTriangle(int n) {
+//   const char star = '*';
+//   if (n == 1) {
+//     cout << star << endl;
+//   } else {
+//     for (int i = 0; i < n; i++) {
+//       cout << star;
+//     }
+//     cout << endl;
+//     printTriangle(n - 1);
+//   }
+// }
 
-void printOppositeTriangles(int n) {
-  const char star = '*';
-  if (n == 1) {
-    cout << star << endl;
-  } else {
-    for (int i = 0; i < n; i++) {
-      cout << star;
-    }
-    cout << endl;
-    printOppositeTriangles(n - 1);
-  }
-}
+// void printOppositeTriangles(int n) {
+//   const char star = '*';
+//   const int height = 2;
+//   const int totalHeight = n * 2;
+//   bool ascending = false;
+//   if (n == 1) {
+//     cout << "printing 1 the value of " << n << endl;
+//     ascending = true;
+//     cout << star << endl;
+//   } else {
+//     for (int i = 0; i < n; i++) {
+//       cout << star;
+//     }
+//     cout << endl;
+//     printOppositeTriangles(n - 1);
+//   }
+//   if (ascending == true) {
+//     cout << "We are here finally" << n << endl;
+//     if (n == 1) {
+//       cout << star << endl;
+//     } else {
+//       printOppositeTriangles(n - 1);
+//       for (int i = 0; i < n; i++) {
+//         cout << star;
+//       }
+//       cout << endl;
+//     }
+//   }
+// }
 
-int main() {
-  printOppositeTriangles(4);
-  return 0;
+// int main() {
+//   printOppositeTriangles(4);
+//   return 0;
+// }
+
+// int main() {
+//   // count =1
+//   // nxtidx = 0
+//   const int arrSize = 6;
+//   int arr[arrSize] = {0, 0, 2, 2, 0, 0};
+
+//   int lastIndexReplaced;
+//   ;
+//   for (int i = 0, j = 0; i < arrSize; i++) {
+//     if (arr[i] > 0) {
+//       arr[j] = arr[i];
+//       j++;
+//     }
+//     lastIndexReplaced = j;
+//   }
+//   cout << lastIndexReplaced << "HERE" << endl;
+
+//   while (lastIndexReplaced < arrSize) {
+//     arr[lastIndexReplaced] = 0;
+//     lastIndexReplaced++;
+//   }
+
+//   for (int i = 0; i < arrSize; i++) {
+//     cout << arr[i] << endl;
+//   }
+//   return 0;
+// }
+
+// int maxZeroLength(int arr[], int arrSize, int startIdx) {
+//   if (startIdx == arrSize) {
+//     return 0;
+//   }
+//   int currLargest = 0;
+//   while (startIdx < arrSize && arr[startIdx++] == 0) {
+//     currLargest++;
+//   }
+//   return max(currLargest, maxZeroLength(arr, arrSize, startIdx));
+// }
+
+// int main() {
+
+//   int arr[6] = {0, 0, 1, 0, 0, 0};
+
+//   cout << maxZeroLength(arr, 6, 0) << endl;
+// }
+
+// bool sortedOrNot(int arr[], int arrLength) {
+//   if (arrLength <= 1)
+//     return true;
+
+//   if (arr[arrLength - 1] < arr[arrLength - 2]) {
+//     return false;
+//   } else {
+//     return sortedOrNot(arr, arrLength - 1);
+//   }
+// }
+
+// bool sortedOrNotEthan(int arr[], int arrLength) {
+//   if (arrLength == 1 || arrLength == 0)
+//     return true;
+//   if (arr[0] <= arr[1])
+//     return sortedOrNotEthan(arr + 1, arrLength - 1);
+
+//   return false;
+// }
+
+// int main() {
+//   int arr[5] = {1, 2, 3, 4, 5};
+//   cout << "MINE" << boolalpha << sortedOrNot(arr, 5) << endl;
+//   cout << "ETHAN" << boolalpha << sortedOrNotEthan(arr, 5) << endl;
+//   return 0;
+// }
+
+int fib(int n) {
+  if (n <= 1) {
+    return n;
+  }
+  return fib(n - 1) + fib(n - 2);
 }
