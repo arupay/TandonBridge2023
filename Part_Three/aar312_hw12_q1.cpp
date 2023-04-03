@@ -3,6 +3,4 @@ using namespace std;
 
 int main(){
 
-    cout<<"testing clion git";
-
 }
