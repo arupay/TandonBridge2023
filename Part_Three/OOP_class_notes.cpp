@@ -354,6 +354,19 @@ int main(){
 
 //Student Question : When we overload an operator are we only changing it to the scope of the class or are we changing it
 //whenever it it used?
+    //Anywhere where we know there is a 'Thing' then we can add two things together. (C++ will evaluate lhr and rhs)
+    //It's scope is limited to anywhere we 'know' about the 'Thing'.
+    //If we do (int + int) , we will still be able to add accordingly.
+    //The meaning operator is defined FOR THE CLASS. YOU CAN DECIDE WHAT IT DOES.
+
+
+//Question 2: When do we want to use const modifier  'int getNum()const {num=100;return num;}'
+    //When we want to restrict potential changing any variables for use in the function
+    //This becomes vital when we use a function that take a 'Thing', and pass it by value
+    //a constified function is a contract with the compiler that we will not change the object we pass
+
+
+//Question 3:  How do we define our operator override fn ? Do we do this as a member or nonmember? If i do it as a member do I give it friend access?
 
 #include <iostream>
 using namespace std;
@@ -361,17 +374,57 @@ using namespace std;
 class Thing {
     int num;
 public:
-    Thing(int newnum = 0): num(newnum) {}
-    int getNum() const {return num;};
-    void setNum(int newnum) {num = newnum;}
-    Thing operator+(const Thing& rhs) const;
+    Thing(int new_num = 0): num(new_num) {} //CONSTRUCTOR
+    int getNum() const {return num;}
+    void setNum(int new_num) { num = new_num ;}
+    Thing operator+(const Thing& rhs) const ; //Member operator override only needs one parameter because ->this obj is left hand side and we can access.
+    Thing& operator ++(); //pre-increment;
+    Thing operator++(int); //post-increment;
 };
+Thing& Thing::operator++(){
+    num++;
+    return *this; //DEREFERENCE THIS is this object
+}
 
+Thing Thing::operator++(int){
+    Thing temp=*this; //COPY OF THIS OBJECT
+    num++;
+    return temp; //Return the original.  Cannot return by reference, because the memory will be cleared when fn ends, MUST RETURN BY VALUE.
+}
+
+Thing operator-(const Thing& lhs, const Thing& rhs) {  //Here we need two parameters, we dont have access to this (nonmember fn)
+    return lhs.getNum() - rhs.getNum();
+}
+
+void func(const Thing& x){
+    x.getNum(); //unexpected;
+    Thing three = x+5;
+}
+Thing Thing::operator+(const Thing& rhs)const {
+    return num + rhs.num;  //Is this an int primitive or an instance of a Thing class? It appears tobe an int as this.num is an int and rhs.num is an int but we declared the fn as type Thing?
+                            //Answer: When we do num +rhs.num, there is an IMPLICIT CALL TO CONSTRUCTOR AND WE ARE PASSING IN THE VALUE !!
+                            //We are implicitly creating a new obj by calling the contructor w/ the value returned by this function
+                            //We can give the constructor an "explicit" keyword to only allow explicit calls such as thing one and thing two.
+}
 int main(){
     Thing one(1);
-    cout<<one.num <<<endl;
+    cout<< one.getNum() <<endl;
     Thing two(2);
+    Thing three;
+    three= one + two; // Function call: three.operator=(one.operator+(two));
+    cout<<three.getNum()<<endl;
+    func(two);
 
-    Thing three = one + two;
-    //Do we do this as a member or nonmember? If i do it as a member do I give it friend access?
+    ++++two; // double pre-increment!
+    ++(++two); //same as the previous line;
+    (two.operator++()).operator++();//still the same as previous line
+
+    two++; //works
+//    (two++)++// DOES NOT WORK ? WHY?  What's returned by 2++, its a value.
+
+    Thing four;
+    four = two-one;
+    cout<<four.getNum()<<endl;
+
+
 }
