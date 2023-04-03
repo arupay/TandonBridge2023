@@ -1,5 +1,4 @@
-#include <iostream>
-using namespace std;
+
 /**
  //The concept of OOP came about in 1980's to bring together data and functions that operate on data.
  //OOP, creates in code an idea that exists in real life.
@@ -67,7 +66,8 @@ class Date{
 
 ACCESSING DATA:
 
-//If we are ACCESSING data, but NOT changing it, then we should create "CONST" functions to access it.
+//If we are ACCESSING data, but NOT changing it, then we should create "CONST" functions to access it. const member functions
+ cannot change data and are the only functions that can be called if the object is a const.
 
 
 
@@ -86,7 +86,292 @@ ACCESSING DATA:
  };
 
 
+Other useful functions:
 
+ Perhaps we could add a printDate fn to print a formatted date: (day/month/year)
+ void displayDate() const { cout << day << "/" <<month << "/" << year; } <-- CONSTified because it's nto changing data
+
+ Or a validate function to check if date is valid
+ bool validate() const;
+
+
+
+Creating and working w/ Objects
+
+ --Working with objects requires reference with "dot operator"
+ --We will not have access to private members!
+
+ int main(){
+ Date d1; <--obj instantiation
+ d1.setDay(6);
+ d1.setMonth(8);
+ d1.setYear(1991);
+ }
+
+ What if we created a class and forgot to set values ?  Well , we just introduced into our data pool an instance of the class
+ Date with GARBAGE values!  How can we avoid this from happening? Constructors!
+
+CONSTRUCTORS
+  -- A function given the name exactly the same as the name of the class without a return type and no parameters
+  -- Constructors are called automatically when objects are created, and sets default values as we decide them to be.
+
+ Member Initialization List Example:
+class Date{
+ private:
+    int day;
+     int month;
+    int year;
+ public:
+    Date() : day(1), month(1), year(1979) {}
+
+ W/O Member initialization Example:
+
+ class Date{
+ private:
+    int day;
+     int month;
+    int year;
+ public:
+    Date(){
+    day =1;
+    month =1;
+    year = 1970;
+    }
+  }
+
+  Now we can instantiate new objects and set dates as single line commands
+
+  Date d2(6,8,1991);
+
+ An important Pointer!
+    Every object has a pointer, which looks like a data member, called 'this'
+    The this pointer points to the calling object
+    Though not always necessary, you can always use this.
+ void setYear (int newYear) { this -> year = newYear;}
+
+
+
+ Operator Overloading (C++ ONLY)
+
+ Allows us to take two objects and add them together.
+    Types of Operators (These are actually functions)
+    (Unary Operator) -> Only work on one operand (++, --)
+    (Binary Operator) -> Works on 2 operands (+,-,*,/,%, +=, <, [])
+    (Ternary Operators) -> Conditional Operators
+
+Some operators cannot be overloaded (., *., ?:..)
+Some can only be overloaded as a member
+    = (assignment operator)
+    [] (array index operator)
+Some also, cannot be overloaded as a member,
+    <<, >>, ...
+
+Choosing Member vs Non-Member
+ Remember that members have access to private
+
+ A function defined as a "fried" in the class is NOT a member, btu will have access
+ to private values/info. (Way of sidestepping private restrictions in C++, but rarely used)
+
+ Otherwise, there is only one difference
+        -- a+ bw ill work in either case
+        --a + 5 (obj vs constant) will work if there is a constuctor
+        which can take 5 and construct an object to add to a
+        --5+a (constant + object) will only work if the above constructor exists AND
+        operator+ is a non-member.
+        -- make them members is easier but not safest
+
+
+ What to RETURN?
+ - The value returned depends onw hat the operator should do (i.e the + operator should return a new value, not update current values)
+ - the return data type depends on what is being returned
+        - if the item was created inside the fn, MUST RETURN BY VALUE (temp= a+b, return temp)
+        - if the item was passed as a parameter, or you are returning the 'this' pointer, you can return
+        by reference. (+= operator).
+ - Returning by reference is preferred (but to do this the object that we are returning ahs to have existed prior)
+ - SUMMARY: IF WE CREATE RETURN BY VALUE, if it was passed RETURN BY REFERENCE
+
+An Odd Case
+
+How to differentiate overloading ++ when it can be PRE and POST increment ?
+ The preincrement operator overload format:
+    Date& operator++(); ==> will change the value, then return a ref to exisiting obj. (RETURN BY REFERENCE)
+ the post-increment operator overload format:
+     Date operator++(int)  ==> will copy the object, then change the value and return the COPY (RETURN BY VALUE)
+      -- note how the post-inc. operator is passed an (int) -> the value of the int is not important.
+
+
+Classes that contain DYNAMIC MEMORY
+    -All classes have an assignment operator and constructor which can copy an existing object, this is
+    a left over of C's structs and is useful.
+    -Unfortunately when pointers are involved (pointers point at heap memory, dynamic memory vars) these built in operators
+    instead copy the pointers and not at what they are pointing to. (SHALLOW COPY)
+    - this creates MEMORY LEAK!
+
+Avoiding Memory Leaks When working w/ Dynamic Memory (THE BIG THREE) :
+ -Copy operations need to copy the DATA, NOT THE POINTERS.
+ -Since we are creating memory in the constructor, we need to destroy that memory when the object falls out of scope.
+ -The Big 3 are three functions that, if you need any of them, you need them ALL
+    - DESTRUCTOR, COPY CONSTRUCTOR, ASSIGNMENT OPERAT OR
+    Destructor- Called automatically when an object calls out of scope
+    Copy Constructor - constructs an obj based on an existing one
+    Assignment Operator - copies on object to another (DEEP COPY)
+        -- Make sure to avoid x=x (self assignment must use 'if(this==&rhs)')
+
+ class Thing{
+    int *value ; <==POINTER
+  public:
+    Thing(int newVal=0) :value(new int(newVal)){}
+    ~Thing() {delete value;} <===DESTRUCTOR
+    Thing (const Thing& rhs) {value = new int(*rhs.value);}    <====Copy constructor
+    Thing& operator=(const Thing& rhs) { *value = *rhs.value;}    <===== Assignment operator
+ }
+
+ Inheritance
+
+    Allows us to create complex classes out of simple ones.
+    During inheritance, the existing class (base class) is enlarged to form a DERIVED CLASS
+    All items (fns, data) which exist in the base class will be in the derived class automatically
+    We can add material to the derived class
+    We can override fns in the base class
+    MEMBER FUNCTIONS OF A DERIVED CLASS CANNOT ACCESS PRIVATE DATA IN THE BASE CLASS (IMPORTANT)
+
+Pets & Cats Code Snippet
+
+class Pet{
+ string name;
+ int PETid;
+public: Pet(int newID=0){petID=newID;}
+        string getName() const {return name;}
+        void setName (string newName) {name = newName;}
+        void speak() const{}
+};
+
+ class Cat:public Pet {<===== DERIVED CLASS
+       double whiskerLength;
+ public:
+    Cat() : Pet(10000){} // explicit call to BASE CONSTRUCTOR
+    void speak() const |cout<<"MEOW!"<<endl;
+    void setLength (double newLength);
+    double getLength() const {return whiskerLength;}
+    void setName(string newName);
+    Cat& operator=(const Pet&);
+
+OVERRIDING FUNCTIONS
+
+    -- To override you just create a function in the derived with the same name and parameters as int he abse
+    --if you need to call the base version, use the scope resolution operator ::
+
+  void Cat::setName(string newName){
+    whiskerLength =0;
+    Pet::setName(newName);
+ }
+
+ What if derived SHOULD access the BASE stuff?
+
+ -Items listed as 'protected' in base can be accessed from derived. USE THIS SPARINGLY.
+
+
+POLYMORPHISM
+
+ -Since every cat is a pet, we SHOULD be able to copy data between cats and pets
+ -Since every cat is a pet, every cat will contain all the functions inside pet
+        -Though, not necessarily the same versions.
+
+ -Polymorphism allows us to copy data from a derived class into a base class, (only base items copy over -- SLICING)
+ -Overloading the assignment operator can allow us to copy base->derived. (overloading)
+ -Since every derived object contains everything in base, a bse pointer can also point to a derived object.
+ -There is no guarantee that the base contains everything in derived, so derived pointer can never point to base.
+ Summary: Base point to derived TRUE, derived point to base FALSE.
+
+int main(){
+ Pet p;
+ Pet* pptr;
+ Cat c;
+ Cat* cptr;
+ p=c; ===> Always Allowed !
+ c=p; ===> Allowed if overloaded operator exists
+ pptr = &c; ===>Always allowed, POLYMORPHISM
+ cptr = &p; ===> NOT ALLOWED!!
+
+
+ VIRTUAL FUNCTIONS
+    If a base pointer is used to point to a derived object, by default the functions will the BASE versions of the fns.
+        -- this can eb catastrophic if the derived fnd oes something different than base
+    The solution is mark the base function as "virtual"
+        -this employs late binding (DYNAMIC BINDING) // Rather than make the static binding decision, which version to call at
+        compile time, we do late or dynamic binding where we choose where to call at RUN-TIME.
+        -The version fo the function called depends ont eh type of object, not the type of pointer;
+
+ PURE VIRTUAL
+    If the base class should contain a function, but doesn't know what the function should actually do, the function can be
+    marked as pure virtual "=0" (Pets should have speak fn, but all derived classes speak differently, so we dont know yet)
+
+
+ class Pet {
+ string name;
+ int petID;
+
+ public:
+    Pet(int newId=0){petID=newID;}
+    string getName() const {return name;}
+    virtual void setName(string newName) {name=newName;}
+    virtual void speak() const=0; <===PURE VIRTUAL FUNCTION
+};
+ class Cat : public Pet {
+      double whiskerLength;
+
+ public:
+    Cat() :Pet(1000) {}
+    void speak() const {cout<<'MEOW!"<<endl;}
+    void setLength(double newLength);
+    double......
+ };
+
+ --In the code above the cat calss overrides the speak function, now we have the ability to have a pet pointer
+ point to a Cat object and call the speak() fn int hat cat object.
+
+ RESTRICTIONS:  Because the Pet class now has virtual fn's it is an ABSTRACT CLASS.  IT CANNOT BE INSTANTIATED
+                NO OBJECT OF TYPE PET CAN BE CREATED (speak fn() cannot be defined, no virtual fn allowed )
+
+
+                BUT, we can create pointers and derive from this class, so PET is still useful as a bse class, even
+                if we can't create objs of this class explicitly.
+
+                 We can create an obj of cat class and have a PET PTR point to it. (PET IS BASE CLASS USE ONLY THROUGH POINTER)
+
+ END OF MODULE SLIDES
 **/
 
+/**
+ WEBINAR 3/30 PROF KATZ
+ 1st Hour Informational Session Takeaway
+       - Week # Tasks/Readings released Thursday Morning
+       - Webinars Thursdays 8PM EST
+       - Tandon bridge cohort success high relative to non-bridge
+       - Make sure to do practice problems in book post chapter.
+       - Very little coding after exam 3
+**/
 
+//Student Question : When we overload an operator are we only changing it to the scope of the class or are we changing it
+//whenever it it used?
+
+#include <iostream>
+using namespace std;
+
+class Thing {
+    int num;
+public:
+    Thing(int newnum = 0): num(newnum) {}
+    int getNum() const {return num;};
+    void setNum(int newnum) {num = newnum;}
+    Thing operator+(const Thing& rhs) const;
+};
+
+int main(){
+    Thing one(1);
+    cout<<one.num <<<endl;
+    Thing two(2);
+
+    Thing three = one + two;
+    //Do we do this as a member or nonmember? If i do it as a member do I give it friend access?
+}
