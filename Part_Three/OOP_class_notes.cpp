@@ -367,6 +367,10 @@ int main(){
 
 
 //Question 3:  How do we define our operator override fn ? Do we do this as a member or nonmember? If i do it as a member do I give it friend access?
+    //this is largely up to us
+    //cannot override an operator more than once for a class
+
+ //Question 4: What is 'this' keyword?
 
 #include <iostream>
 using namespace std;
@@ -374,19 +378,24 @@ using namespace std;
 class Thing {
     int num;
 public:
-    Thing(int new_num = 0): num(new_num) {} //CONSTRUCTOR
+    /*explicit*/ Thing(int new_num = 0): num(new_num) {} //CONSTRUCTOR
     int getNum() const {return num;}
     void setNum(int new_num) { num = new_num ;}
     Thing operator+(const Thing& rhs) const ; //Member operator override only needs one parameter because ->this obj is left hand side and we can access.
-    Thing& operator ++(); //pre-increment;
-    Thing operator++(int); //post-increment;
+    Thing& operator ++(); //pre-increment -- returns by reference
+    Thing operator++(int); //post-increment --returns by value; //This int is nothing, it just tells the compiler these two functions are different.
+    void demoThisFunc() const;
 };
+
+void Thing::demoThisFunc() const {
+    cout<<this<<endl;
+}
 Thing& Thing::operator++(){
     num++;
     return *this; //DEREFERENCE THIS is this object
 }
 
-Thing Thing::operator++(int){
+Thing Thing::operator++(int){ //notice int is never used
     Thing temp=*this; //COPY OF THIS OBJECT
     num++;
     return temp; //Return the original.  Cannot return by reference, because the memory will be cleared when fn ends, MUST RETURN BY VALUE.
@@ -408,6 +417,7 @@ Thing Thing::operator+(const Thing& rhs)const {
 }
 int main(){
     Thing one(1);
+    one.demoThisFunc(); //'this' is the same variable as 'one'  . This pointer is the calling to the calling object//the object on the LHS
     cout<< one.getNum() <<endl;
     Thing two(2);
     Thing three;
@@ -425,6 +435,4 @@ int main(){
     Thing four;
     four = two-one;
     cout<<four.getNum()<<endl;
-
-
 }
