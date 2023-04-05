@@ -24,12 +24,14 @@ In addition to the checks, the program also reads all the deposits (from the con
     //Friend (operator << to print check data)
 
 #include <iostream>
+#include <cstdlib>
+#include <cctype>
+#include <cmath>
 using namespace std;
 
 
 
 class Money {
-private: long all_cents;
 public:
     //Overloaded Ops
     friend Money operator+(const Money& amount1, const Money& amount2);
@@ -49,6 +51,8 @@ public:
     // If negative, both dollars and cents should be negative
     Money(long dollars);
     //Initializes object so its value is $xx.00
+    Money(double amount);
+    // Initializes object typed in double format (i.e. $23.21)
     Money();
     //Initializes zero dollar/cents value as $0.00
 
@@ -59,11 +63,15 @@ public:
     //Overloads >> operator so it can be used to input values of type Money.
     //Notation for inputting negative amounts is as in -$100,00.
     //Precondition: If ins is a file input stream, then ins has already been connected to a file.
-    friend istream& operator <<(ostream& outs, const Money& amount);
+    friend ostream& operator <<(ostream& outs, const Money& amount);
     //Overloads the << operator so it can be used to input values of type Money
     //Precedes each output value of type money with a dollar isgn
     //Precondition: if outs is af ile type outstream, then ins has already been connected to a  file
+private:
+    long all_cents;
 };
+int digit_to_int(char c);
+
 
 int main(){
 
@@ -76,6 +84,91 @@ int main(){
     cout<<"Example input for a cashed check of check-number 5, in the amount of $100.32: '5 100.32 1'"<<endl;
     cout<<"When you have entered all your checks, enter '0 00.00 0' to end the input sequence"<<endl;
 
+    Money test1(2, 55), test2(55.23);
+
+    cout<<test1;
+    cout<<test2;
 
     return 0;
+}
+
+
+
+
+
+
+
+Money operator+(const Money& amount1, const Money& amount2){
+    Money temp;
+    temp.all_cents = amount1.all_cents + amount2.all_cents;
+}
+
+bool operator==(const Money& amount1, const Money& amount2){
+    return (amount1.all_cents == amount2.all_cents);
+}
+Money::Money(long dollars, int cents){
+    if (dollars * cents <0){
+        cout<<"illegal values for dollars and cents"<<endl;
+        exit(1);
+    }
+    all_cents=dollars* 100 + cents;
+}
+Money::Money(long dollars) {
+    all_cents=dollars*100;
+}
+
+Money::Money(double amount){
+    all_cents = floor(amount * 100);
+}
+
+Money::Money() : all_cents(0){} //implied return
+
+double Money::get_value() const {
+    return all_cents * 0.01;
+}
+
+
+istream& operator >>(istream& ins, Money& amount){
+    char one_char, decimal_point, digit1, digit2;
+    long dollars;
+    int cents;
+    bool negative;
+
+    ins>> one_char;
+    if (one_char==' '){
+        negative = true;
+        ins >> one_char;
+    } else {
+        negative=false ;
+    }
+    ins >> dollars >> decimal_point >> digit1 >>digit2;
+    if (one_char !='$' || decimal_point !='.' || !isdigit(digit1) || !isdigit(digit2)){
+        cout<<"Error illegal form for money input"<<endl;
+        exit(1);
+    }
+    cents=digit_to_int(digit1)* 10 + digit_to_int(digit2);
+    amount.all_cents=dollars*100+cents;
+    if (negative)
+        amount.all_cents = -amount.all_cents;
+    return ins;
+}
+
+ostream& operator <<(ostream& outs, const Money& amount){
+    long positive_cents, dollars, cents;
+    positive_cents = labs(amount.all_cents);
+    dollars = positive_cents /100;
+    cents = positive_cents%100;
+
+    if (amount.all_cents < 0)
+        outs << "-$" << dollars << '.';
+    else
+        outs << "$" << dollars << '.';
+    if (cents < 10)
+        outs <<'0';
+    outs <<cents;
+    return outs;
+}
+
+int digit_to_int(char c){
+    return (static_cast<int>(c) - static_cast<int>('0'));
 }
