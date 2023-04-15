@@ -76,6 +76,7 @@
 //   outSum = sum;
 //   return count;
 // }
+// week 6
 
 #include <iostream>
 using namespace std;
