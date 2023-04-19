@@ -89,7 +89,7 @@
 
 
 //Sorting Algos
-    //Selection Sort & Merge Sort
+    //Selection Sort & Merge Sort // DOWNSIDE SPACE. IT NEEDS A WHOLE NOTHER ARRAY.
 
 
 //#include <iostream>
@@ -146,66 +146,66 @@
  * */
 
 //IMPLEMENTATION OF MERGE SORT
-#include <iostream>
-using namespace std;
-
-void merge (int arr[], int lowLeft, int highLeft, int highRight){
-    int lowRight = highLeft+1;
-    int *mergedArr;
-    int iRight, iLeft, iRes;
-    int size = highRight-lowLeft +1;
-    mergedArr = new int[size];
-
-    iLeft = lowLeft;
-    iRight=lowRight;
-    iRes=0;
-
-    while (iLeft <= highLeft && iRight <= highRight){
-        if (arr[iLeft]<arr[iRight]){
-            mergedArr[iRes]=arr[iLeft];
-            iLeft++;
-            iRes++;
-        } else {
-            mergedArr[iRes]=arr[iRight];
-            iRight++;
-            iRes++;
-        }
-    }
-    while (iLeft<=highLeft){
-        mergedArr[iRes]=arr[iLeft];
-        iLeft++;
-        iRes++;
-    }
-    while (iRight<=highRight) {
-        mergedArr[iRes] = arr[iRight];
-        iRight++;
-        iRes++;
-    }
-    for (int i=0, iArr=lowLeft; i<size ;i++, iArr++){
-        arr[iArr] = mergedArr[i];
-    }
-    delete []mergedArr;
-}
-
-void mergeSort(int arr[], int low, int high){
-    int mid;
-    if (low == high){
-        return ;
-    }else {
-        mid=(low+high) /2 ;
-        mergeSort(arr, low, mid);
-        mergeSort(arr, mid + 1, high);
-        merge (arr, low, mid, high);
-    }
-}
- int main(){
-    int arr[10]={3,6,3,4,8,10,43,2,3,4};
-     mergeSort(arr, 0, 9);
-     for (int i =0; i<10; i++){
-         cout<< arr[i] << " ";
-     }
-    return 0;
- }
+//#include <iostream>
+//using namespace std;
+//
+//void merge (int arr[], int lowLeft, int highLeft, int highRight){
+//    int lowRight = highLeft+1;
+//    int *mergedArr;
+//    int iRight, iLeft, iRes;
+//    int size = highRight-lowLeft +1;
+//    mergedArr = new int[size];
+//
+//    iLeft = lowLeft;
+//    iRight=lowRight;
+//    iRes=0;
+//
+//    while (iLeft <= highLeft && iRight <= highRight){
+//        if (arr[iLeft]<arr[iRight]){
+//            mergedArr[iRes]=arr[iLeft];
+//            iLeft++;
+//            iRes++;
+//        } else {
+//            mergedArr[iRes]=arr[iRight];
+//            iRight++;
+//            iRes++;
+//        }
+//    }
+//    while (iLeft<=highLeft){
+//        mergedArr[iRes]=arr[iLeft];
+//        iLeft++;
+//        iRes++;
+//    }
+//    while (iRight<=highRight) {
+//        mergedArr[iRes] = arr[iRight];
+//        iRight++;
+//        iRes++;
+//    }
+//    for (int i=0, iArr=lowLeft; i<size ;i++, iArr++){
+//        arr[iArr] = mergedArr[i];
+//    }
+//    delete []mergedArr;
+//}
+//
+//void mergeSort(int arr[], int low, int high){
+//    int mid;
+//    if (low == high){
+//        return ;
+//    }else {
+//        mid=(low+high) /2 ;
+//        mergeSort(arr, low, mid);
+//        mergeSort(arr, mid + 1, high);
+//        merge (arr, low, mid, high);
+//    }
+//}
+// int main(){
+//    int arr[10]={3,6,3,4,8,10,43,2,3,4};
+//     mergeSort(arr, 0, 9);
+//     for (int i =0; i<10; i++){
+//         cout<< arr[i] << " ";
+//     }
+//    return 0;
+// }
  //HOW DOES IT WORK? // RUNTIME ANALYSIS
 //Analyzed in RECURSIVE TREE MODEL
 
@@ -217,3 +217,64 @@ void mergeSort(int arr[], int low, int high){
   *Relate the level #, the # oc calls, the cost of each calls, and multipel to get total cost
   *THETHA(N) )(nlog2(n))
   * */
+
+ //BINARYSEACH RECURSIVE & SELECITON SORT //DOWNSIDE LIST MUST ALREADY BE SORTED
+//#include <iostream>
+//#include <vector>
+// using namespace std;
+//
+// int binarySearch(vector<int>& v, int toFind, int start, int end){
+//     if (start > end)
+//         return -1;
+//     int mid = (start+end )/2;
+//     if (v[mid] > toFind){
+//         return binarySearch(v,toFind, start, mid-1);
+//     }else if (v[mid] < toFind){
+//         return binarySearch(v, toFind, mid+1, end);
+//     } else{
+//         return v[mid];
+//     }
+// }
+//
+//void selectionSort(vector<int>& v){ //SLOW (ON^2)
+//     for (int i=0; i< v.size(); i++){
+//         int minIndex=i;
+//         for (int j=i+1<v.size();j++)
+//             if (v[j]<v[minIndex])
+//                 minIndex=j;
+//         int temp =v[i];
+//         v[i] = v[minIndex];
+//         v[minIndex] = temp;
+//     }
+// }
+//int main(){
+//return 0;
+//}
+
+//ALGO THAT TRIES TO SOLVE BOTH SPEED & SPACE PROBS
+// Quicksort works by chosoing a pivot.  It tries to get to n(log)n without utilizing the doubling of space (merge sort)
+//Merge requries twice s much space
+
+// Quick sort says this -- Instead of makign copies of everything, lets just sweep it to one side or the other
+// We are going to pick what we call a pivot, and we will sort in place, all elements to be either to the left or right side fo pivot
+// now if we choose are pivot wisely, then the pivot is the median element
+// BUT WE CADNNOT PREDETERMINE THE MEDIAN ELEMENT SO we randomly chose a median element
+//If we pick poorly, then our pivot will be either the min or max, if I only sort min or max -- then the rest of vector is unosrted
+// n^2, not good
+//
+//What we do is statistical analysis to try and choose a reasonable good pivot
+//THis is call MEDIAN OF THREE
+
+//We take three values, the one at the start the one at the end and the one geographically in the middle.
+////We then sort allt hree
+///////If teh vector is already sorted, then we got the median, if its not then at least we don't pick the min element
+/////////Statistically this is better
+
+
+//GOOD PIVOT NLOGN, bad pivot N^2, on average it is nlgo n
+
+//MUST KNOW INSERTION SORT. QUICK SORT. SELECTION SORT. (NLOGN IF PivOT IS MEDIAN )
+
+//Must use linear search if we don't have a sorted vector.
+//Otherwise ALWAYS USE BINARY SEARCH.
+//C++ is programed to use quicksort by default.
