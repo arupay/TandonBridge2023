@@ -7,7 +7,7 @@
 using namespace std;
 
 class PersonNode;
-class PeopleList;
+class PeopleLList;
 
 class PersonNode {
 public:

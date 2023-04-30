@@ -72,7 +72,7 @@
 //
 //int main(){
 //    ofstream outFile; //ofstream outFile("outfile.txt);
-//    outFile.open("outfile_922.txt");
+//    outFile.open("infilepath.txt");
 //    outFile<<"Hello World"<<endl;
 //    outFile.close();
 //};

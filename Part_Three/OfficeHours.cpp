@@ -146,132 +146,217 @@
 //LINKED LIST
 
 //ALWAYS PROTOTYPE ALL YOUR CLASSES!!
+//
+//#include <iostream>
+//using namespace std;
+//
+//class Expense;
+//class AprilExpenses;
+//
+//class Expense{
+//private:
+//    int _data{};
+//public:
+//    string _name;
+//    bool cool{};
+//    Expense *_next{};
+//    Expense *_prev{};
+//    int setData(int n){
+//        _data=n;
+//    }
+//    int getData() const{
+//        return _data;
+//    }
+//};
+//
+//class AprilExpenses{
+//private:
+//    Expense *_head;
+//    Expense *_tail;
+//public:
+//    AprilExpenses(){
+//        _head=nullptr;
+//        _tail=nullptr;
+//    }
+//    Expense* front(){
+//        return _head;
+//    }
+//    Expense* back(){
+//        return _tail;
+//    }
+//
+//    void addNodeNoTail(int n, string newName){
+//        Expense *temp=new Expense;
+//        temp->setData(n);
+//        temp->_name = newName;
+//        if (_head==nullptr){
+//            _head=temp;
+//        } else {
+//            Expense *cycle = _head;
+//            while (cycle->_next!= nullptr){
+//                cycle=cycle->_next;
+//            }
+//            cycle->_next=temp;
+//            temp->_next= nullptr;
+//        }
+//    }
+//
+//    void addNode(int n, string newName){
+//        Expense *temp= new Expense;
+//        temp->setData(n);
+//        temp->_name = newName;
+//
+//        if (_head == nullptr){
+//            _head=temp;
+//            _tail=temp;
+//        }else {
+//            _tail->_next= temp;
+//            _tail=_tail->_next;
+//        }
+//    }
+//    void addNode(int n){
+//        Expense *temp = new Expense;
+//        temp->setData(n);
+//        temp->_next = nullptr;
+//
+//        if (_head==nullptr){
+//           _head=temp;
+//           _tail=temp;
+//        }else {
+//            _tail->_next = temp; //ADD NODE
+//            _tail = _tail->_next;//UPDATE THE TAIL
+//        }
+//    }
+//    void display(){
+//        Expense *temp = _head;
+//        while (temp!= nullptr){
+//            cout<< temp->getData()<<endl;
+//            temp = temp->_next;
+//        }
+//    }
+//    void displayRecursive(Expense *tmp){
+//        //base case
+//        if (tmp !=nullptr){
+//            cout<<_head->getData()<<endl;
+//            displayRecursive(tmp->_next);
+//        }
+//    }
+//    bool didIBuyShoesThisMonth(){
+//        Expense *temp = _head;
+//        while (temp!= nullptr){
+//            if (temp->_name== "shoes") return true;
+//            temp = temp->_next;
+//        }
+//        return false;
+//    }
+//
+//    int howManyDidIBuy(string item){
+//        Expense *temp=_head;
+//        int count=0;
+//        while (temp != nullptr){
+//            if (temp->_name==item){
+//                count++;
+//            } else {
+//                temp=temp->_next;
+//            }
+//        }
+//        return count;
+//    }
+//
+//};
+//
+////There are situations where we dont know what the data type we will take is, template allows us to say
+////there will be a class T, we will pass it and return it's own type, all arguments passed will be also that type.
+//template <class T>
+//T add (T x, T y){
+//    return x + y;
+//}
+//
+//template <class T, class L>
+//class Dog{
+//public:
+//    T data;
+//    Dog(T n){
+//        data = n;
+//    }
+//    L name;
+//    Dog(T n,L x) {
+//        data = n;
+//        name=x;
+//    }
+//};
+//
+//template <class T>
+//class TemplateClass {
+//public:
+//    T data;
+//    string name;
+//    TemplateClass(T n, string newName) {
+//        data = n;
+//        name = newName;
+//    }
+//};
+//
+//
+//int main(){
+//
+//
+//    TemplateClass<int> newClass(5, "Shoes");
+//    TemplateClass<int> newClass2(10,"purse");
+//    cout<<newClass.data <<newClass2.data;
+//    return 0;
+//}
+
+//Reading in and reading out files
 
 #include <iostream>
+#include <fstream>//reading in and out library
+#include <vector>
+
 using namespace std;
 
-class Expense;
-class AprilExpenses;
+int basicReadIn(){
+    ifstream file;
+    string filePath ="directory/filepath";
+    file.open(filePath);
 
+    if (!file){
+        cout<<"Error!";
+        return 1;
+    } //if its not open /file does nto exist
 
-class Expense{
-private:
-    int _data{};
-public:
-    string _name;
-    bool cool{};
-    Expense *_next{};
-    Expense *_prev{};
-    int setData(int n){
-        _data=n;
+    char c;
+    vector<char> vec;
+    while (file.get(c)){
+        vec.push_back(c);
     }
-    int getData() const{
-        return _data;
-    }
-};
-
-class AprilExpenses{
-private:
-    Expense *_head;
-    Expense *_tail;
-public:
-    AprilExpenses(){
-        _head=nullptr;
-        _tail=nullptr;
-    }
-    Expense* front(){
-        return _head;
-    }
-    Expense* back(){
-        return _tail;
-    }
-
-    void addNodeNoTail(int n, string newName){
-        Expense *temp=new Expense;
-        temp->setData(n);
-        temp->_name = newName;
-        if (_head==nullptr){
-            _head=temp;
-        } else {
-            Expense *cycle = _head;
-            while (cycle->_next!= nullptr){
-                cycle=cycle->_next;
-            }
-            cycle->_next=temp;
-            temp->_next= nullptr;
-        }
-    }
-
-    void addNode(int n, string newName){
-        Expense *temp= new Expense;
-        temp->setData(n);
-        temp->_name = newName;
-
-        if (_head == nullptr){
-            _head=temp;
-            _tail=temp;
-        }else {
-            _tail->_next= temp;
-            _tail=_tail->_next;
-        }
-    }
-    void addNode(int n){
-        Expense *temp = new Expense;
-        temp->setData(n);
-        temp->_next = nullptr;
-
-        if (_head==nullptr){
-           _head=temp;
-           _tail=temp;
-        }else {
-            _tail->_next = temp; //ADD NODE
-            _tail = _tail->_next;//UPDATE THE TAIL
-        }
-    }
-    void display(){
-        Expense *temp = _head;
-        while (temp!= nullptr){
-            cout<< temp->getData()<<endl;
-            temp = temp->_next;
-        }
-    }
-    void displayRecursive(Expense *tmp){
-        //base case
-        if (tmp !=nullptr){
-            cout<<_head->getData()<<endl;
-            displayRecursive(tmp->_next);
-        }
-    }
-    bool didIBuyShoesThisMonth(){
-        Expense *temp = _head;
-        while (temp!= nullptr){
-            if (temp->_name== "shoes") return true;
-            temp = temp->_next;
-        }
-        return false;
-    }
-
-    int howManyDidIBuy(string item){
-        Expense *temp=_head;
-        int count=0;
-        while (temp != nullptr){
-            if (temp->_name==item){
-                count++;
-            } else {
-                temp=temp->_next;
-            }
-        }
-        return count;
-    }
-
-};
+    file.close();//close file.
+}
 
 int main(){
-    AprilExpenses l;
-    l.addNode(5);
-    l.addNode(7);
-    l.addNode(8);
+    ifstream inStream;
+    ofstream outStream;
+   string path="infilepath.txt";
+   string outPath= "outputpath.txt";
+   inStream.open(path);
+   outStream.open(outPath);
 
-    l.display();
-    return 0;
+
+   if (!inStream){
+       cout<<"Error";
+       return 1;
+   }
+
+   char c;
+
+   string currLine;
+   while (getline(inStream, currLine)){
+       for (int i=2; i<currLine.length(); i++){
+           if (currLine[i]!=' '){
+               outStream << currLine[i];
+           }
+       }
+       outStream << "\n";
+   }
+   return 0;
 }
