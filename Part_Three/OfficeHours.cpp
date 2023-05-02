@@ -337,7 +337,7 @@ int main(){
     ifstream inStream;
     ofstream outStream;
    string path="infilepath.txt";
-   string outPath= "outputpath.txt";
+   string outPath= "output.txt";
    inStream.open(path);
    outStream.open(outPath);
 
