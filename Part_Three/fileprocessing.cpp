@@ -209,7 +209,7 @@ int main(){
 
 
 //SEEKG
-/* is a funciton in c++ that is used to set the position of the file pointer in an input file stream (ifstream)
+/* is a function in c++ that is used to set the position of the file pointer in an input file stream (ifstream)
  * ALLOWS YOU TO MOVE THE FILE POINTER TO SPECIFIC POSITION AND READ DATA FROM THAT POSITION!!!
  *
 If we hare reached the end of marker (EOF) where the file is in a failed space, using seekG to the beginning

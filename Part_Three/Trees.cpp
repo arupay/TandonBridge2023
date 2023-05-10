@@ -66,6 +66,7 @@ public:
     void printPreOrder(BSTNode<T>* node);
     void printPostOrder(BSTNode<T>* node);
     void printLevelOrder();
+    void insert(T item);
 
 };
 template <class T>
@@ -100,14 +101,7 @@ int BSTNode<T>::getSize() const{
  * -->Level-Order-->Breadth-first search / we are going outward on the levels of a tree.
  * */
 
-template <class T>
-void BST<T>::printInOrder(BSTNode<T>* node){
-    if (node!=nullptr){
-        printInOrder(node->leftChid);
-        cout<<node->data   <<",";
-        printInOrder(node->rightChild);
-    }
-}
+
 template <class T>
 void BST<T>::printPreOrder(BSTNode<T>* node){
     if (node!=nullptr){
@@ -116,6 +110,7 @@ void BST<T>::printPreOrder(BSTNode<T>* node){
         printPreOrder(node->rightChild);
     }
 }
+//Pre-Order  20 5 3 10 30 25
 template <class T>
 void BST<T>::printPostOrder(BSTNode<T> *node) {
     if (node!=nullptr){
@@ -124,7 +119,23 @@ void BST<T>::printPostOrder(BSTNode<T> *node) {
         cout<<node->data<<",";
     }
 }
+//In Order 3 5 10 20 25 30
+template <class T>
+void BST<T>::printInOrder(BSTNode<T>* node){
+    if (node!=nullptr){
+        printInOrder(node->leftChid);
+        cout<<node->data   <<",";
+        printInOrder(node->rightChild);
+    }
+}
+// 3 10 5 25 30 20
 
+
+//preorder root prints in first
+//in order root prints at middle
+//post order root prints last
+
+//LEVEL ORDER TRAVERSAL BREADTH FIRST
 template <class T>
 void BST<T>::printLevelOrder() {
     queue<BSTNode<T>*> q;
@@ -139,14 +150,104 @@ void BST<T>::printLevelOrder() {
             q.push(temp->rightChild); //recursive do this right
     }
 }
-int main(){
-    return 0;
-}
+//20 5 30 3 10 25 BREADTH FIRST or LEVEL
 
 ///TRAVERSAL DIAGRAM
-/*
+/*              20
+ *          5       30
+ *      3   10  25
  *
+ * Preorder - 20, 5, 3, 10, 30 25
+ * InOrder - 3,5,10,20,25,30
+ * Post Order - 3,10,5,25,30,20
+ * Level (BREADTH FIRST)- 20,5,30,3,10,25
+ *
+ * */
+
+/*INSERTION INTO TREES*/
+
+template <class T>
+void BST<T>::insert(T item){
+    if (root==nullptr){ //no root exists
+        root=new BSTNode<T>(item);//construct new item on heap make it root
+        return;
+    }
+    BSTNode<T>* temp =root;
+    BSTNode<T>* prev = root;
+    while (temp!=nullptr){
+        //temp traverses to tree to find insertion point
+        //eventually temp becomes nullptr, but prev holds temps last position
+        prev=temp;
+        if(item < temp->data)
+            temp = temp->left;
+        else
+            temp=temp->right;
+    }
+    //now, we decide if to insert right or left
+    if (item < prev->data)
+        prev->left= new BSTNode<T>(item, prev);
+    else
+        prev->right=new BSTNode<T>(item, prev);
+}
+
+//
+//Remove operation
+//
+//-->change parent to temp->parent
+
+
+//When BSTs FAIL
+/*In best case scenarios BST result in O(log N) time for everything.
+ * Unfortunately, if insertions into the tree are already in order...
+ * ----Everything gets inserted right and we get unbalanced!
+ 5
+    10
+        15
+            20
+                25
+ *An unbalanced tree increases the time it takes to look for an item, if we have 1 million items
+ * there are one million iterations, as we do not get to halve our search pool at every step.
+ *
+ * BALANCING BINARY SEARCH TREES
+ *
+ * Balanced BST ensure O(log N) search time
+ * There are two popular types of balanced binary search trees
+ *
+ *
+ * AVL Trees (RESTRICTED HEIGHTS TREES!)
+ *--Named after their creators
+ *--Each tree records its own HEIGHT (can differ by NO MORE THAN 1)
+ *--When heights differ by more than one, the tree must be ROTATED
+ *--Rotation requires assining a NEW ROOT.
+ *
+ *GOOD AVL TREE
+ *          10 h=2
+ *      5 h=1     20 h=0
+ *  3 h=0
+ *
+ *
+ *
+ * Given a grandparent, parent , child which is unbalanced
+ * If the left parent's left subchild (or right parent's right subchild)
+ * is greater than the left parents right subchild , or the right parents left subschild.
+ *
+ * Single rotation -- make the parent the new grandparent and the grandparent and the child become
+ * the new children!
+ *
+ *
+ *Double rotations are dont with two calls to the single rotation problem
+ *
+ *
+ *
+ * Red-Black Trees
+ * STL Has two trees, a set and a map.
+ * STL Set, and Map are implemented as Red-Black Trees
  *
  *
  *
  * */
+
+
+/*
+ * */
+
