@@ -957,9 +957,9 @@
  * big theta is worst oN^2, best O(N)
  * */
 
-//if data is +, only left child (right child false)
-//if data is -, only rigth child (left child false)
-////if data is 0, no child, or 2 child (right only false, left only false);
+//if data is +, only left child allowed (right child FALSE)
+//if data is -, only right child allowed (left child FALSE)
+//if data is 0, left && right allowed, null && null allowed (null && left FALSE, right && null FALSE);
 //#include <iostream>
 //using namespace std;
 //
@@ -986,7 +986,7 @@
 //        }
 //    }
 //}
-//
+
 //int main(){
 //    PLNRNode* root = new PLNRNode();
 //    root->data = 0;
@@ -1108,3 +1108,313 @@
 //
 //
 
+
+/* set up ifstream obj
+ * read in words
+ * use map
+ * itereate map to print
+ *
+ * */
+
+//#include <iostream>
+//#include <map>
+//#include <fstream>
+//#include <string>
+//
+//using namespace std;
+//
+//
+//void fileReader(ifstream& obj){
+//    string input;
+//    cout<<"Enter filename to read"<<endl;
+//    cin>>input;
+//    obj.open(input);
+//    while (!obj){
+//        cout<<"ERROR. Enter filename to read."<<endl;
+//        cin>>input;
+//        obj.clear();
+//        obj.open(input);
+//    }
+//};
+//
+//map<string, int> mapBuilder(ifstream& obj) {
+//    map<string, int> map;
+//    string currWord;
+//    while (obj >> currWord) {
+//        if (map.find(currWord) == map.end()) {
+//            map.insert_or_assign(currWord, 1);
+//        } else {
+//            int accrue = map[currWord]+1;
+//            map.insert_or_assign(currWord, accrue);
+//        }
+//    }
+//    return map;
+//}
+//
+//int main(){
+//    ifstream file;
+//    fileReader(file);
+//    map<string, int> wordMap = mapBuilder(file);
+//    for (auto &x: wordMap){
+//            std::cout<<x.first<<" : "<<x.second<<endl;
+//        }
+//    return 0;
+//}
+
+
+/*To sort a stack (lets callit MAIN) I would create a temporary stack which we can call TEMP. I would pop the first element from MAIN and push it onto TEMP if its larger than TEMP.top(), or if TEMP is empty.  I would then pop a second element from MAIN, I would again evluate if this elmeent is larger than TEMP.TOP(), if so I would push it onto TEMP.  If its SMALLER than TEMP.TOP(), i would POP() TEMP repeatedly (pushing every popped value onto MAIN()), until I found a value smaller, and then finally push onto temp.  Doing this repeated creates a sorted TEMP stack.  My stopping condition would be when MAIN stack is empty.   Runtime of this condition is N if the Main stack is already sorted, and N^2 if its unsorted (worst case if its reversely sorted).
+ * Benefits of this approach is space complexity is N and uses only true stack methods.
+ * */
+//#include <vector>
+//using namespace std;
+//class BST;
+//class BSTNode {
+//public:
+//    int data;
+//    BSTNode* left;
+//    BSTNode* right;
+//    BSTNode* parent;
+//};
+//
+//class BST{
+//    BST* root;
+//public:
+//    void insertIntoTree(BSTNode* nodeToInsert);
+//    bool isCorrect(BSTNode* rootPtr){
+//        if (rootPtr==nullptr)
+//            return true;
+//        if (rootPtr->left->parent != rootPtr || rootPtr->right->parent != rootPtr)
+//            return false;  //SEGMENTATION FAULT POSSIBILITY IF ROOT->left- IS NULLPTR. ALWAYS CHECK!!!
+//            /* if (rootPtr->left != nullptr && rootPtr->left->parent != rootPtr)
+//             *  return false
+//             *if (rootPtr->right != nullptr && rootPtr->right->parent != rootPtr)
+//             *  return false
+//             * */
+//        else
+//            return isCorrect(rootPtr->left) && isCorrect(rootPtr->right);
+//    }
+//    void insertWithSortedVec(vector<int>& sortedVec, int left, int right){
+//        if (left>right){
+//            return;
+//        }
+//        int mid = (left+right)/2;
+//         insert(sortedVec[mid]);
+//         insertWithSortedVec(sortedVec, left, mid-1);
+//        insertWithSortedVec(sortedVec, mid+1, right);
+//    }
+//};
+//
+//void BST::insertIntoTree(BSTNode *nodeToInsert) {
+//}
+
+//ABOVE
+//(15 pts) Given an already sorted vector of integers and an implementation of the Binary Search Tree class (BST <int>; note this is unbalanced), write a function which will insert the nodes from the vector into BST in a way that keeps the tree balanced
+
+//print elements in a sorted array using merge sort
+//#include <iostream>
+//#include <vector>
+//using namespace std;
+//
+//void mergePrint(vector<int>& nums, int start,int end){
+//    if (start>end)
+//        return;
+//    int middle = (start + end) /2;
+//    cout<<nums[middle]<<" ";
+//    mergePrint(nums, start, middle-1 );
+//    mergePrint(nums, middle+1, end );
+//}
+//int main(){
+//    vector<int> nums = {1,2,3,4,5,6,7};
+//    mergePrint(nums, 0, nums.size()-1);
+//    return 0;
+//}
+
+
+//Expression Tree//
+
+//class Node{
+//public:
+//    Node(int value){val=value;};
+//    virtual int calculateValue()=0;
+//    int val;
+//    Node* left=nullptr;
+//    Node* right=nullptr;
+//};
+//
+//class OperandNode: public Node{
+//public:
+//    OperandNode(int value): Node (value){};
+//    virtual int calculateValue(){
+//        return val;
+//    };
+//};
+//
+//class OperatorNode: public Node{
+//    char operatorChar;
+//public:
+//    OperatorNode(int value, char operationType) : Node(value) { operatorChar= operationType;};
+//    virtual int calculateValue(){
+//        switch (operatorChar) {
+//            case 'x': return left->val*right->val;
+//            case '+': return left->val+right->val;
+//            case '/': return left->val/right->val;
+//            case '-': return left->val-right->val;
+//            default: return 0;
+//        }
+//    };
+//};
+//
+//class ExpressionTree{
+//    Node* root;
+//public:
+//    int CalculateValue(Node* ptrRoot) {
+//        //should be in order traversal to sum up left right then middle (parent), left right then middle (parent).
+//        if (ptrRoot == nullptr) {
+//            return 0;
+//        }
+//        return root->calculateValue();
+//    }
+//};
+
+//Given a binary tree where only poinetrs and data value is stored in each node, explain how you determine in Theta(N) time that three is balanced.
+
+/*I would do a breadth first approach at solution.  I would stipulate that a diference in height of no more than 1 is acceptable for a tree to be considered balanced and for my funciton to return true.
+ *
+ * I would create a queue, that holds tree nodes.
+ * I would create a variable called DIFFERENCE initiated at zero.
+ * I would start at the root and pop the root and store it in the queue,
+ * i would create a while loop that runs only if my queue has items, I would traverse the queue, diassembling left and right and nodes and pushing them back in the queue,
+ * if i ever traversed a node with only one child, i would add one to DIFFERENCE;
+ * if difference is ever more than 1, i break and return false.
+ * if the queue execuse and the count is less than or equal to one I return true.
+ * */
+//template <class T>
+//class LListNode{
+//public:
+//    LListNode<T>* next;
+//    T data;
+//};
+//
+//
+//
+//template<class T>
+//LListNode<T>* concatenateTwoLists(const LListNode<T>* listOne, const LListNode<T>* listTwo){
+//    if (listOne==nullptr && listTwo==nullptr) return nullptr;
+//    //Must refactor for case when one is null ptr but other isnt.
+//
+//    LListNode<T>* newList = new LListNode<T>(listOne->data);
+//    LListNode<T>* head = newList; //return this at the end.
+//    LListNode<T>* itr = newList->next;
+//        while (itr!=nullptr) {
+//            LListNode<T>* newNode = new LListNode<T>(itr->data);
+//            newList->next = newNode;
+//            newList=newList->next;
+//            itr = itr->next;
+//        }
+//    LListNode<T>* itr2 = listTwo; //second node
+//        while (itr2!=nullptr){
+//            LListNode<T>* newNode = new LListNode<T>(itr2->data);
+//            newList->next = newNode;
+//            newList=newList->next;
+//            itr2 = itr2->next;
+//        }
+//        return head;
+//}
+//
+//#include <iostream>
+//#include <fstream>
+//#include <set>
+//#include <string>
+//using namespace std;
+//
+//void openFile(ifstream& file){
+//    string path;
+//    cout<<"please enter file name"<<endl;
+//    cin>>path;
+//    file.open(path);
+//    while (!file){
+//        cout<<"ERROR, please enter file name"<<endl;
+//        cin>>path;
+//        file.clear();
+//        file.open(path);
+//    }
+//}
+//
+//void readFile(ifstream& file, set<string>& idSet){
+//    string id;
+//    while (file>>id){
+//        idSet.insert(id);
+//    }
+//}
+//
+//void writeOutResults(ofstream& outFile, set<string>& idSet){
+//    for (auto& x: idSet){
+//        outFile<<x<<endl;
+//    }
+//}
+//int main(){
+//    const string outputPath = "output.txt";
+//    ifstream NYU_File;
+//    openFile(NYU_File);
+//    set<string> NYUIdSet;
+//    readFile(NYU_File, NYUIdSet);
+//    ofstream outFileNYU;
+//    outFileNYU.open(outputPath);
+//    writeOutResults(outFileNYU, NYUIdSet);
+//    return 0;
+//}
+
+//using namespace std;
+//
+//class Solution {
+//public:
+//    vector<string> summaryRanges(vector<int>& nums) {
+//        vector<string> retVec;
+//        vec<int> tempVec;
+//        const string arrow="->";
+//        int firstPtr =0;
+//        for (int i = 0; i<=nums.size();i++){
+//            if (tempVec.empty() || tempVec[tempVec.size()-1] +1 == retVec[i] ){
+//                tempVec.push_back(nums[i])
+//            } else {
+//                string range = tempVec.size()>1 ? tempVec[0] + arrow + tempVec[tempVec.size()-1]
+//            }
+//        }
+//        return vec;
+//    }
+//};
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+
+struct ListNode {
+    int val;
+    ListNode *next;
+
+    ListNode() : val(0), next(nullptr) {}
+
+    ListNode(int x) : val(x), next(nullptr) {}
+
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if (head==nullptr || head->next==nullptr){
+            return head;
+        }
+        ListNode* newHead = head->next;
+        ListNode* itr = head;
+
+        return head;
+    }
+};

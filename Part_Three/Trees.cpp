@@ -247,7 +247,3 @@ void BST<T>::insert(T item){
  *
  * */
 
-
-/*
- * */
-
