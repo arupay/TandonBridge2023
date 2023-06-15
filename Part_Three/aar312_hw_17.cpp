@@ -9,7 +9,6 @@ You can use the constants RED and BLACK, instead of the ints 0 and 1, when appro
 #include <iostream>
 #include <math.h> // for asserting height
 #include <queue>
-#include <assert.h>
 
 using namespace std;
 
@@ -106,9 +105,11 @@ class RBT {
 
 public:
     RBT() : root(nullptr) {}
+
     void insert(const T &);
     void insert(const T &, RBTNode<T> *&point, RBTNode<T> *parent);
     void prettyPrint() const { root->prettyPrint(0); }
+    void dfsRotate(RBTNode<T>* &point);
     int height() const { return root->height(); }
 };
 
@@ -128,14 +129,44 @@ template <class T>
 void RBT<T>::singleCR(RBTNode<T> *&point) {
     RBTNode<T> *grandparent = point;
     RBTNode<T> *parent = point->left;
-    // TODO: ADD ROTATION CODE HERE
+
+    grandparent->left = parent->right;
+    if (parent->right != nullptr) {
+        parent->right->parent = grandparent;
+    }
+
+    parent->parent = grandparent->parent;
+    if (grandparent->parent == nullptr) {
+        root = parent;
+    } else {
+        grandparent == grandparent->parent->left ?
+            grandparent->parent->left = parent :
+            grandparent->parent->right = parent;
+    }
+    parent->right = grandparent;
+    grandparent->parent = parent;
 }
 
 template <class T>
 void RBT<T>::singleCCR(RBTNode<T> *&point) {
     RBTNode<T> *grandparent = point;
     RBTNode<T> *parent = point->right;
-    // TODO: ADD ROTATION CODE HERE
+
+    grandparent->right = parent->left;
+    if (parent->left != nullptr) {
+        parent->left->parent = grandparent;
+    }
+
+    parent->parent = grandparent->parent;
+    if (grandparent->parent == nullptr) {
+        root = parent;
+    } else {
+        grandparent == grandparent->parent->left  ?
+            grandparent->parent->left = parent :
+            grandparent->parent->right = parent;
+    }
+    parent->left = grandparent;
+    grandparent->parent = parent;
 }
 
 template <class T>
@@ -144,13 +175,74 @@ void RBT<T>::insert(const T &toInsert, RBTNode<T> *&point, RBTNode<T> *parent) {
         point = new RBTNode<T>(toInsert); // modifies the pointer itself since *point
         // is passed by reference
         point->parent = parent;
-
-        RBTNode<T> *curr_node = point; // curr_node will be set appropriately when walking up the tree
         // TODO: ADD RBT RULES HERE
+        //Every node has a color red or black
+        //root is always black (*Easy fix)
+        //if a node is red, children must be black (*IMPORTANT)
+        //Every path from a node to a null must traverse the same number of black nodes
+
+        //New nodes must be red
+            //parent is black = done
+            //parent is red= problem (identified situation where rotation is necessary)
+                //in AVL grandparent node is faulty node, in the R&B tree its the grandchild.
+                //if uncle is black ( null is black)
+                    //if new node is outside -> single rotation (grandparet)
+                    //if new node is inside -> double rotation (grandparent
+                // if uncle is red -- AVOID//IMPOSSIBLE.
+         //As you go down to find the insertion if you encounter a black parent
+        //with two red childnre, recolor to red parent with two black children. if grandparent
+        //is red, ROTATE!.
+        if (parent != nullptr)
+            (toInsert < parent->data) ? parent->left = point : parent->right = point;
+        RBTNode<T> *curr_node = point; // curr_node will be set appropriately when walking up the tree
+        if (parent == nullptr){
+            root=point;
+            point->color = BLACK;
+        } else{
+            dfsRotate(curr_node);
+        }
     } else if (toInsert < point->data) { // recurse down the tree to left to find correct leaf location
         insert(toInsert, point->left, point);
     } else { // recurse down the tree to right to find correct leaf location
         insert(toInsert, point->right, point);
+    }
+}
+template <class T>
+void RBT<T>::dfsRotate(RBTNode<T>* &point){
+    if (point == root){
+        point->color = BLACK; // easy fix root must always be black.
+    }
+    RBTNode<T>* parent = nullptr;
+    RBTNode<T>* grandparent = nullptr;
+    while (getColor(point->parent)== RED) {
+        parent = point->parent;
+        grandparent = parent->parent;
+        if (grandparent->left == parent) {
+            if (getColor(grandparent->right) == RED) {  //uncle is red (right side uncle)
+                parent->color = BLACK;
+                grandparent->right->color = BLACK; //change uncle's color
+                grandparent != root ? grandparent->color = RED: grandparent->color = BLACK; //update gp color, unless gp is root
+                point = grandparent; //update point
+            } else {
+                point == parent->left ? singleCR(grandparent) : doubleCR(grandparent); //inside single outside double
+                swapColor(grandparent); // eliminate adjacent red
+                swapColor(parent);
+                point = parent;//update point
+            }
+        } else {
+            if (getColor(grandparent->left)== RED) { //uncle is red (left side uncle)
+                parent->color = BLACK;
+                grandparent->left->color = BLACK; //change uncle's color
+                if (grandparent != root)
+                    grandparent->color = RED; //update grandparents color
+                point = grandparent; //update point
+            } else {
+               point == parent->left ? doubleCR(grandparent) : singleCCR(grandparent); //inside double outside single
+                swapColor(grandparent);// eliminate adjacent red
+                swapColor(parent);
+                point = parent; //update point
+            }
+        }
     }
 }
 

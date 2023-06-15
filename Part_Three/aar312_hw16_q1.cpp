@@ -81,7 +81,7 @@ int main() {
         ifstream objFile;
         pascalChars = openInStream(objFile);
         cout<< boolalpha<<"Is the string valid? " <<endl;
-        pascalSyntaxChecker(pascalChars);
+        cout << pascalSyntaxChecker(pascalChars);
     } else {
         string testOne= "begin {}{}{} end";
         cout<<"The following pascal code should return true : "<< testOne<<endl;
